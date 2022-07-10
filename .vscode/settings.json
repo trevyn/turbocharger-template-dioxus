@@ -1,0 +1,12 @@
+{
+ "css.lint.unknownAtRules": "ignore",
+ "editor.formatOnSave": true,
+ "files.insertFinalNewline": true,
+ "files.trimTrailingWhitespace": true,
+ "tailwindCSS.experimental.classRegex": ["[\\s{]class:\\s?\"([^\"]*)\""],
+ "tailwindCSS.includeLanguages": { "rust": "html" },
+ "rust-analyzer.checkOnSave.command": "clippy",
+ "rust-analyzer.procMacro.enable": true,
+ "rust-analyzer.cargo.features": ["wasm"],
+ "rust-analyzer.checkOnSave.features": ["wasm"]
+}
