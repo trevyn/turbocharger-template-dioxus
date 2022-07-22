@@ -2,7 +2,7 @@ use turbocharger::prelude::*;
 
 #[backend]
 async fn get_connection_local_number() -> i64 {
-    connection_local!(number: i64);
+    connection_local!(number: &mut i64);
     *number += 1;
     *number
 }

@@ -10,7 +10,7 @@ pub struct Person {
 
 #[backend]
 async fn admin_auth(password: String) -> Result<(), tracked::StringError> {
-    connection_local!(admin_authed: bool);
+    connection_local!(admin_authed: &mut bool);
 
     if password == "admin" {
         *admin_authed = true;
@@ -30,7 +30,7 @@ pub fn AdminWithAuth(cx: Scope) -> Element {
 
 #[backend]
 async fn _admin_insert_person() -> Result<i64, tracked::StringError> {
-    connection_local!(admin_authed: bool);
+    connection_local!(admin_authed: &mut bool);
     if !*admin_authed {
         return Err("Admin not authed".into());
     }
@@ -40,7 +40,7 @@ async fn _admin_insert_person() -> Result<i64, tracked::StringError> {
 
 #[backend]
 async fn _admin_delete_person(rowid: i64) -> Result<usize, tracked::StringError> {
-    connection_local!(admin_authed: bool);
+    connection_local!(admin_authed: &mut bool);
     if !*admin_authed {
         return Err("Admin not authed".into());
     }
@@ -50,7 +50,7 @@ async fn _admin_delete_person(rowid: i64) -> Result<usize, tracked::StringError>
 
 #[backend]
 pub async fn _admin_list_person() -> Result<Vec<i64>, tracked::StringError> {
-    connection_local!(admin_authed: bool);
+    connection_local!(admin_authed: &mut bool);
     if !*admin_authed {
         return Err("Admin not authed".into());
     }
@@ -97,7 +97,7 @@ pub fn PersonAdmin(cx: Scope) -> Element {
 
 #[backend]
 pub async fn _admin_get_person(rowid: i64) -> Result<Person, tracked::StringError> {
-    connection_local!(admin_authed: bool);
+    connection_local!(admin_authed: &mut bool);
     if !*admin_authed {
         return Err("Admin not authed".into());
     }
