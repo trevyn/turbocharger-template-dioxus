@@ -24,7 +24,7 @@ wasm = [
 dioxus = {version = "0.2", features = ["web"], optional = true}
 
 # dependencies for both server and wasm
-turbocharger = {git = "https://github.com/trevyn/turbocharger", branch = "main", features = ["full", "debug_expansions"]}
+turbocharger = {version = "0.4", features = ["full", "debug_expansions"]}
 turbosql = "0.7"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
