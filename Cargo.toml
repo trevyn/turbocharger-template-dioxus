@@ -24,6 +24,7 @@ wasm = [
 dioxus = {version = "0.2", features = ["web"], optional = true}
 
 # dependencies for both server and wasm
+automod = "1"
 turbocharger = {version = "0.4", features = ["full", "debug_expansions"]}
 turbosql = "0.7"
 
