@@ -30,7 +30,7 @@ turbosql = "0.7"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 # dependencies for server only
-clap = {version = "3", features = ["derive"]}
+clap = {version = "4", features = ["derive"]}
 log = "0.4"
 opener = "0.5"
 rust-embed = "6"
