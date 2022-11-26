@@ -22,7 +22,8 @@ async fn main() {
         std::env::set_var("RUST_LOG", "info")
     }
 
-    pretty_env_logger::init_timed();
+    tracing_subscriber::fmt::init();
+
     let opts = Opts::parse();
 
     log::warn!("warn enabled");
