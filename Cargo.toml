@@ -32,7 +32,7 @@ turbosql = "0.7"
 # dependencies for server only
 clap = {version = "4", features = ["derive"]}
 log = "0.4"
-opener = "0.5"
+opener = "0.6"
 rust-embed = "6"
 tokio = {version = "1", features = ["macros", "rt-multi-thread"]}
 tracing-subscriber = "0.3"
