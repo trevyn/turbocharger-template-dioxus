@@ -65,15 +65,15 @@ jobs:
           targets: wasm32-unknown-unknown
 
       - run: |
-          wget --no-verbose https://github.com/rustwasm/wasm-bindgen/releases/download/0.2.83/wasm-bindgen-0.2.83-x86_64-unknown-linux-musl.tar.gz
-          tar xvf wasm-bindgen-0.2.83-x86_64-unknown-linux-musl.tar.gz
+          wget --no-verbose https://github.com/rustwasm/wasm-bindgen/releases/download/0.2.84/wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
+          tar xvf wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
           wget --no-verbose https://github.com/WebAssembly/binaryen/releases/download/version_111/binaryen-version_111-x86_64-linux.tar.gz
           tar xvf binaryen-version_111-x86_64-linux.tar.gz
 
       - run: npm install
       - run: npx audit-ci --low
       - run: cargo build --lib --release --features wasm --target wasm32-unknown-unknown
-      - run: wasm-bindgen-0.2.83-x86_64-unknown-linux-musl/wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm
+      - run: wasm-bindgen-0.2.84-x86_64-unknown-linux-musl/wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm
       - run: binaryen-version_111/bin/wasm-opt src-frontend/turbocharger_generated/index_bg.wasm -o src-frontend/turbocharger_generated/index_bg.wasm -Oz
       - run: npx vite build
       - run: rm -rf src-frontend/dist/assets
