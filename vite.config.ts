@@ -11,7 +11,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 100000000,
     cssCodeSplit: false,
     rollupOptions: {
-      inlineDynamicImports: true,
+      output: { inlineDynamicImports: true },
     },
   },
 });
