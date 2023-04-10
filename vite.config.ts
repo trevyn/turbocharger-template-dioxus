@@ -12,7 +12,6 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       inlineDynamicImports: true,
-      output: { manualChunks: () => "everything.js" },
     },
   },
 });
