@@ -5,6 +5,9 @@ on:
   pull_request:
   schedule: [cron: "40 1 * * *"]
 
+permissions:
+  contents: read
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -59,10 +62,10 @@ jobs:
       - run: echo "BUILD_ID=$(cat build_id)" >> $GITHUB_ENV
       - run: echo "BUILD_ADJECTIVE=$(cat build_id | cut -d- -f1)" >> $GITHUB_ENV
 
-      - uses: hecrj/setup-rust-action@v1
-        with:
-          rust-version: ${{ matrix.rust }}
-          targets: wasm32-unknown-unknown
+      - run: rustup default ${{ matrix.rust }} && rustup update ${{ matrix.rust }}
+      - run: rustup target add wasm32-unknown-unknown
+
+      - run: cargo install --config net.retry=10 dioxus-cli
 
       - run: |
           wget --no-verbose https://github.com/rustwasm/wasm-bindgen/releases/download/0.2.84/wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
