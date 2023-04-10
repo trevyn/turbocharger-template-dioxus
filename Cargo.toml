@@ -38,7 +38,4 @@ tokio = {version = "1", features = ["macros", "rt-multi-thread"]}
 tracing-subscriber = "0.3"
 
 [patch.crates-io]
-turbocharger = {path = "../turbocharger/turbocharger"}
-
-[patch.'https://github.com/trevyn/turbocharger']
-turbocharger = {path = "../turbocharger/turbocharger"}
+turbocharger = {git = "https://github.com/trevyn/turbocharger", branch = "main"}
