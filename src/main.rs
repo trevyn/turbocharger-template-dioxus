@@ -43,7 +43,7 @@ async fn main() {
         (None, None) => {
             eprintln!("Serving (unsecured) HTTP on port {}", opts.port);
             #[cfg(debug_assertions)]
-            opener::open(format!("http://127.0.0.1:{}", 3000)).ok();
+            opener::open(format!("http://127.0.0.1:{}", 5173)).ok();
             turbocharger::serve::<Frontend>(&addr).await;
         }
         _ => eprintln!("Both key-path and cert-path must be specified for HTTPS."),
