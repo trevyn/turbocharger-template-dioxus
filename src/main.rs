@@ -31,6 +31,8 @@ async fn main() {
     log::debug!("debug enabled");
     log::trace!("trace enabled");
 
+    dioxus_hot_reload::hot_reload_init!();
+
     let addr = std::net::SocketAddr::from(([0, 0, 0, 0], opts.port));
 
     match (opts.key_path, opts.cert_path) {
