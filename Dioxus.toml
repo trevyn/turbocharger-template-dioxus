@@ -11,10 +11,11 @@ default_platform = "web"
 out_dir = "dist"
 
 # resource (public) file folder
-asset_dir = "public"
+# asset_dir = "public"
 
 [application.tools]
 
+# binaryen = { wasm_opt = true }
 # tailwindcss = {input = "main.css", config = "tailwind.config.js"}
 
 [web.app]
@@ -28,7 +29,7 @@ title = "dioxus | ⛺"
 reload_html = true
 
 # which files or dirs will be watcher monitoring
-watch_path = ["src", "public"]
+watch_path = ["src"]
 
 # include `assets` in web platform
 [web.resource]
