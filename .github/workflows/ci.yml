@@ -85,8 +85,8 @@ jobs:
       # - run: binaryen-version_112/bin/wasm-opt src-frontend/turbocharger_generated/index_bg.wasm -o src-frontend/turbocharger_generated/index_bg.wasm -Oz
 
       - run: npx vite build
-      - run: rm -rf src-frontend/dist/assets
+      # - run: rm -rf src-frontend/dist/assets
       - run: brotli index.html
-        working-directory: "src-frontend/dist"
-      - run: ls -la src-frontend/dist
-      - run: RUSTFLAGS="-Ctarget-cpu=nehalem" cargo build --bin turbocharger-template-dioxus --release --target x86_64-unknown-linux-gnu
+        working-directory: "dist/dist"
+      - run: ls -la dist/dist
+      # - run: RUSTFLAGS="-Ctarget-cpu=nehalem" cargo build --bin turbocharger-template-dioxus --release --target x86_64-unknown-linux-gnu
