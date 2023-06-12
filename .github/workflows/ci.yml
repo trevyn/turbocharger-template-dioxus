@@ -67,7 +67,7 @@ jobs:
       - run: rustup default ${{ matrix.rust }} && rustup update ${{ matrix.rust }}
       - run: rustup target add wasm32-unknown-unknown
 
-      - run: cargo install --config net.retry=10 --git https://github.com/DioxusLabs/cli --rev 286d7691
+      - run: cargo install --config net.retry=10 --git https://github.com/mrxiaozhuox/dioxus-cli --rev afdeacd
 
       # - run: |
       #     wget --no-verbose https://github.com/rustwasm/wasm-bindgen/releases/download/0.2.84/wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
@@ -78,7 +78,7 @@ jobs:
       - run: npm install
       - run: npx audit-ci --low
 
-      - run: dioxus build --features wasm
+      - run: dioxus build --release --features wasm
 
       # - run: cargo build --lib --release --features wasm --target wasm32-unknown-unknown
       # - run: wasm-bindgen-0.2.84-x86_64-unknown-linux-musl/wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm

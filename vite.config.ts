@@ -3,7 +3,7 @@ import { viteSingleFile } from "vite-plugin-singlefile";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  root: "dist",
+  root: "src-frontend",
   plugins: [viteSingleFile()],
   build: {
     target: "es2021",
