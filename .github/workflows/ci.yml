@@ -87,6 +87,6 @@ jobs:
       - run: npx vite build
       # - run: rm -rf src-frontend/dist/assets
       - run: brotli index.html
-        working-directory: "dist/dist"
-      - run: ls -la dist/dist
+        working-directory: "src-frontend/dist"
+      - run: ls -la src-frontend/dist
       # - run: RUSTFLAGS="-Ctarget-cpu=nehalem" cargo build --bin turbocharger-template-dioxus --release --target x86_64-unknown-linux-gnu
