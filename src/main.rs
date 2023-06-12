@@ -1,49 +1,25 @@
 mod app;
 
-use clap::Parser;
+// server
 
-#[derive(clap::Parser)]
-struct Opts {
-    #[clap(short, long)]
-    cert_path: Option<String>,
-    #[clap(short, long)]
-    key_path: Option<String>,
-    #[clap(short, long, default_value = "8080")]
-    port: u16,
-}
+#[cfg(not(target_arch = "wasm32"))]
+mod server;
 
+#[cfg(not(target_arch = "wasm32"))]
 #[tokio::main(flavor = "multi_thread", worker_threads = 10)]
 async fn main() {
-    #[derive(rust_embed::RustEmbed)]
-    #[folder = "src-frontend/dist"]
-    struct Frontend;
+    server::main().await;
+}
 
-    if std::env::var_os("RUST_LOG").is_none() {
-        std::env::set_var("RUST_LOG", "info")
-    }
+// wasm
 
-    tracing_subscriber::fmt::init();
+#[cfg(target_arch = "wasm32")]
+use turbocharger::prelude::*;
 
-    let opts = Opts::parse();
+#[cfg(target_arch = "wasm32")]
+fn main() {
+    // wasm_logger::init(wasm_logger::Config::default());
+    // console_error_panic_hook::set_once();
 
-    log::warn!("warn enabled");
-    log::info!("info enabled");
-    log::debug!("debug enabled");
-    log::trace!("trace enabled");
-
-    let addr = std::net::SocketAddr::from(([0, 0, 0, 0], opts.port));
-
-    match (opts.key_path, opts.cert_path) {
-        (Some(_key_path), Some(_cert_path)) => {
-            eprintln!("Serving HTTPS on port {}", opts.port);
-            turbocharger::serve_tls::<Frontend>(&addr).await;
-        }
-        (None, None) => {
-            eprintln!("Serving (unsecured) HTTP on port {}", opts.port);
-            #[cfg(debug_assertions)]
-            opener::open(format!("http://127.0.0.1:{}", 3000)).ok();
-            turbocharger::serve::<Frontend>(&addr).await;
-        }
-        _ => eprintln!("Both key-path and cert-path must be specified for HTTPS."),
-    }
+    dioxus_web::launch(app::App);
 }

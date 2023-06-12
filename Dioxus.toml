@@ -1,0 +1,47 @@
+[application]
+
+# App (Project) Name
+name = "index"
+
+# Dioxus App Default Platform
+# desktop, web, mobile, ssr
+default_platform = "web"
+
+# `build` & `serve` dist path
+out_dir = "src-frontend/turbocharger_generated"
+
+# resource (public) file folder
+# asset_dir = "public"
+
+[application.tools]
+
+# binaryen = { wasm_opt = true }
+# tailwindcss = {input = "main.css", config = "tailwind.config.js"}
+
+[web.app]
+
+# HTML title tag content
+title = "dioxus | ⛺"
+
+[web.watcher]
+
+# when watcher trigger, regenerate the `index.html`
+reload_html = true
+
+# which files or dirs will be watcher monitoring
+watch_path = ["src"]
+
+# include `assets` in web platform
+[web.resource]
+
+# CSS style file
+style = []
+
+# Javascript code file
+script = []
+
+[web.resource.dev]
+
+# Javascript code file
+# serve: [dev-server] only
+script = ["https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"]

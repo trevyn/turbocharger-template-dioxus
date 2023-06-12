@@ -7,6 +7,9 @@ on:
   pull_request:
   schedule: [cron: "40 1 * * *"]
 
+permissions:
+  contents: read
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -61,25 +64,29 @@ jobs:
       - run: echo "BUILD_ID=$(cat build_id)" >> $GITHUB_ENV
       - run: echo "BUILD_ADJECTIVE=$(cat build_id | cut -d- -f1)" >> $GITHUB_ENV
 
-      - uses: hecrj/setup-rust-action@v1
-        with:
-          rust-version: ${{ matrix.rust }}
-          targets: wasm32-unknown-unknown
+      - run: rustup default ${{ matrix.rust }} && rustup update ${{ matrix.rust }}
+      - run: rustup target add wasm32-unknown-unknown
 
-      - run: |
-          wget --no-verbose https://github.com/rustwasm/wasm-bindgen/releases/download/0.2.84/wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
-          tar xvf wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
-          wget --no-verbose https://github.com/WebAssembly/binaryen/releases/download/version_112/binaryen-version_112-x86_64-linux.tar.gz
-          tar xvf binaryen-version_112-x86_64-linux.tar.gz
+      - run: cargo install --config net.retry=10 --git https://github.com/mrxiaozhuox/dioxus-cli --rev afdeacd
+
+      # - run: |
+      #     wget --no-verbose https://github.com/rustwasm/wasm-bindgen/releases/download/0.2.84/wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
+      #     tar xvf wasm-bindgen-0.2.84-x86_64-unknown-linux-musl.tar.gz
+      #     wget --no-verbose https://github.com/WebAssembly/binaryen/releases/download/version_112/binaryen-version_112-x86_64-linux.tar.gz
+      #     tar xvf binaryen-version_112-x86_64-linux.tar.gz
 
       - run: npm install
       - run: npx audit-ci --low
-      - run: cargo build --lib --release --features wasm --target wasm32-unknown-unknown
-      - run: wasm-bindgen-0.2.84-x86_64-unknown-linux-musl/wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm
-      - run: binaryen-version_112/bin/wasm-opt src-frontend/turbocharger_generated/index_bg.wasm -o src-frontend/turbocharger_generated/index_bg.wasm -Oz
+
+      - run: dioxus build --release --features wasm
+
+      # - run: cargo build --lib --release --features wasm --target wasm32-unknown-unknown
+      # - run: wasm-bindgen-0.2.84-x86_64-unknown-linux-musl/wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm
+      # - run: binaryen-version_112/bin/wasm-opt src-frontend/turbocharger_generated/index_bg.wasm -o src-frontend/turbocharger_generated/index_bg.wasm -Oz
+
       - run: npx vite build
-      - run: rm -rf src-frontend/dist/assets
+      # - run: rm -rf src-frontend/dist/assets
       - run: brotli index.html
         working-directory: "src-frontend/dist"
       - run: ls -la src-frontend/dist
-      - run: RUSTFLAGS="-Ctarget-cpu=nehalem" cargo build --bin turbocharger-template-dioxus --release --target x86_64-unknown-linux-gnu
+      # - run: RUSTFLAGS="-Ctarget-cpu=nehalem" cargo build --bin turbocharger-template-dioxus --release --target x86_64-unknown-linux-gnu

@@ -1,21 +1,20 @@
 {
- "scripts": {
-  "start-info": "if [ ! -d node_modules ]; then npm install; fi && if [ ! -d src-frontend/dist ]; then mkdir src-frontend/dist; fi && cargo build --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/debug/turbocharger_generated.wasm && { npx vite > /dev/null & RUST_LOG=info cargo run --bin turbocharger-template-dioxus; }",
-  "wasm-only": "cargo build --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/debug/turbocharger_generated.wasm",
-  "start-info-release-wasm": "if [ ! -d node_modules ]; then npm install; fi && if [ ! -d src-frontend/dist ]; then mkdir src-frontend/dist; fi && cargo build --release --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm && { npx vite > /dev/null & RUST_LOG=info cargo run; }",
-  "start-debug": "if [ ! -d node_modules ]; then npm install; fi && if [ ! -d src-frontend/dist ]; then mkdir src-frontend/dist; fi && cargo build --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/debug/turbocharger_generated.wasm && { npx vite > /dev/null & RUST_LOG=debug cargo run; }",
-  "update-rs-deps": "cargo update",
-  "update-js-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
- },
- "devDependencies": {
-  "@web/test-runner": "^0.13",
-  "audit-ci": "^6",
-  "autoprefixer": "^10",
-  "postcss": "^8",
-  "prettier-plugin-tailwindcss": "^0.1",
-  "tailwindcss": "^3",
-  "vite": "^2",
-  "vite-plugin-singlefile": "^0.7",
-  "vite-web-test-runner-plugin": "^0.1"
- }
+  "scripts": {
+    "start-info": "if [ ! -d node_modules ]; then npm install; fi && if [ ! -d src-frontend/dist ]; then mkdir src-frontend/dist; fi && cargo build --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/debug/turbocharger_generated.wasm && { npx vite > /dev/null & RUST_LOG=info cargo run --bin turbocharger-template-dioxus; }",
+    "wasm-only": "cargo build --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/debug/turbocharger_generated.wasm",
+    "start-info-release-wasm": "if [ ! -d node_modules ]; then npm install; fi && if [ ! -d src-frontend/dist ]; then mkdir src-frontend/dist; fi && cargo build --release --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/release/turbocharger_generated.wasm && { npx vite > /dev/null & RUST_LOG=info cargo run; }",
+    "start-debug": "if [ ! -d node_modules ]; then npm install; fi && if [ ! -d src-frontend/dist ]; then mkdir src-frontend/dist; fi && cargo build --lib --features wasm --target wasm32-unknown-unknown && wasm-bindgen --out-dir src-frontend/turbocharger_generated --out-name index --target web target/wasm32-unknown-unknown/debug/turbocharger_generated.wasm && { npx vite > /dev/null & RUST_LOG=debug cargo run; }",
+    "update-rs-deps": "cargo update",
+    "update-js-deps": "rm -rf node_modules && rm -rf package-lock.json && npm install"
+  },
+  "devDependencies": {
+    "audit-ci": "^6",
+    "autoprefixer": "^10",
+    "postcss": "^8",
+    "prettier-plugin-tailwindcss": "^0.3",
+    "tailwindcss": "^3",
+    "vite": "^4",
+    "vite-plugin-singlefile": "^0.13",
+    "vitest": "^0.32"
+  }
 }

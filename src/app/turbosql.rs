@@ -22,9 +22,9 @@ async fn admin_auth(password: String) -> Result<(), tracked::StringError> {
 
 #[frontend]
 pub fn AdminWithAuth(cx: Scope) -> Element {
-    use_future(&cx, (), |_| admin_auth("admin".into())).value().and_then(|r| match r {
-        Ok(_) => rsx! {cx, PersonAdmin()},
-        Err(e) => rsx!(cx, p { "error: {e} " }),
+    use_future(cx, (), |_| admin_auth("admin".into())).value().and_then(|r| match r {
+        Ok(_) => render! { PersonAdmin{} },
+        Err(e) => render!(p { "error: {e} " }),
     })
 }
 
@@ -60,8 +60,8 @@ pub async fn _admin_list_person() -> Result<Vec<i64>, tracked::StringError> {
 
 #[frontend]
 pub fn PersonAdmin(cx: Scope) -> Element {
-    let refresh = use_state(&cx, || false);
-    let fut = use_future(&cx, (), |_| _admin_list_person());
+    let refresh = use_state(cx, || false);
+    let fut = use_future(cx, (), |_| _admin_list_person());
 
     if *refresh.get() {
         refresh.set(false);
@@ -69,7 +69,7 @@ pub fn PersonAdmin(cx: Scope) -> Element {
     }
 
     fut.value().and_then(|r| match r {
-        Ok(r) => rsx! {cx,
+        Ok(r) => render! {
             a {
                 href: "#",
                 onclick: move |_| {
@@ -82,16 +82,16 @@ pub fn PersonAdmin(cx: Scope) -> Element {
                 "add new row to person"
             }
             table {
-                r.iter().map(|rowid| rsx! {
+                r.iter().map(|rowid| render! {
                     tr {
                         td {
-                            _AdminPersonRow(rowid: *rowid, refresh: refresh.clone())
+                            _AdminPersonRow{rowid: *rowid, refresh: refresh.clone()}
                         }
                     }
                 })
             }
         },
-        Err(e) => rsx!(cx, p { "error: {e} " }),
+        Err(e) => render!(p { "error: {e} " }),
     })
 }
 
@@ -109,8 +109,8 @@ pub async fn _admin_get_person(rowid: i64) -> Result<Person, tracked::StringErro
 #[inline_props]
 fn _AdminPersonRow(cx: Scope, rowid: i64, refresh: UseState<bool>) -> Element {
     to_owned![rowid];
-    use_future(&cx, (), |_| _admin_get_person(rowid)).value().and_then(|r| match r {
-        Ok(r) => rsx! {cx,
+    use_future(cx, (), |_| _admin_get_person(rowid)).value().and_then(|r| match r {
+        Ok(r) => render! {
             dl {
                 dd {
                     "rowid {rowid} "
@@ -130,7 +130,7 @@ fn _AdminPersonRow(cx: Scope, rowid: i64, refresh: UseState<bool>) -> Element {
                 dd { "name: {r.name:?}" }
             }
         },
-        Err(e) => rsx! {cx,
+        Err(e) => render! {
             p { class: "text-red-500",
                 "person rowid {rowid} ERROR {e}"
             }

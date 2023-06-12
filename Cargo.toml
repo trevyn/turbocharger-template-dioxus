@@ -4,14 +4,9 @@ name = "turbocharger-template-dioxus"
 publish = false
 version = "0.1.0"
 
-[lib]
-crate-type = ["cdylib"]
-name = "turbocharger_generated"
-path = "src/wasm.rs"
-
-[target.'cfg(target_arch = "wasm32")'.dependencies]
+# [target.'cfg(target_arch = "wasm32")'.dependencies]
 # overrides for real wasm build
-wasm-bindgen = "=0.2.84" # Version to be synced with the wasm-bindgen CLI version in CI
+# wasm-bindgen = "=0.2.84" # Version to be synced with the wasm-bindgen CLI version in CI
 
 [features]
 wasm = [
@@ -19,14 +14,14 @@ wasm = [
   "turbocharger/full",
   "dioxus",
 ]
+
 [dependencies]
 # dependencies that are really only for wasm, but rust-analyzer uses too
-dioxus = {version = "0.2", features = ["web"], optional = true}
+dioxus = {version = "0.3", optional = true}
 
 # dependencies for both server and wasm
-automod = "1"
 turbocharger = {version = "0.4", features = ["full"]}
-turbosql = "0.7"
+turbosql = "0.8"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 # dependencies for server only
@@ -37,8 +32,5 @@ rust-embed = "6"
 tokio = {version = "1", features = ["macros", "rt-multi-thread"]}
 tracing-subscriber = "0.3"
 
-# [patch.crates-io]
-# turbocharger = {path = "../turbocharger/turbocharger"}
-
-# [patch.'https://github.com/trevyn/turbocharger']
-# turbocharger = {path = "../turbocharger/turbocharger"}
+[patch.crates-io]
+turbocharger = {git = "https://github.com/trevyn/turbocharger", branch = "main"}

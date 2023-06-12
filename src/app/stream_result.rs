@@ -17,8 +17,8 @@ fn stream_result() -> impl Stream<Item = Result<String, tracked::StringError>> {
 
 #[frontend]
 pub fn StreamResult(cx: Scope) -> Element {
-    use_stream(&cx, stream_result, |s, v| *s = Some(v)).read().as_ref().and_then(|r| match r {
-        Ok(r) => rsx!(cx, p { "stream_result: {r}" }),
-        Err(e) => rsx!(cx, p { "stream_result handling an error: {e}" }),
+    use_stream(cx, stream_result, |s, v| *s = Some(v)).read().as_ref().and_then(|r| match r {
+        Ok(r) => render!(p { "stream_result: {r}" }),
+        Err(e) => render!(p { "stream_result handling an error: {e}" }),
     })
 }

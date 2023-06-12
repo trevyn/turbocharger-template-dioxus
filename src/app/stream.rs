@@ -14,8 +14,8 @@ fn stream() -> impl Stream<Item = String> {
 
 #[frontend]
 pub fn Stream(cx: Scope) -> Element {
-    use_stream(&cx, stream, |s, v| *s = Some(v))
+    use_stream(cx, stream, |s, v| *s = Some(v))
         .read()
         .as_ref()
-        .and_then(|r| rsx!(cx, p { "stream: {r}" }))
+        .and_then(|r| render!(p { "stream: {r}" }))
 }

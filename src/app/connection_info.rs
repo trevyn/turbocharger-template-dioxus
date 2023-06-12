@@ -7,5 +7,5 @@ async fn get_connection_info() -> String {
 
 #[frontend]
 pub fn ConnectionInfo(cx: Scope) -> Element {
-    use_future(&cx, (), |_| get_connection_info()).value().and_then(|r| rsx!(cx, "{r}"))
+    use_future(cx, (), |_| get_connection_info()).value().and_then(|r| render!("{r}"))
 }

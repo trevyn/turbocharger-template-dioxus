@@ -9,9 +9,9 @@ async fn get_connection_local_number() -> i64 {
 
 #[frontend]
 pub fn ConnectionLocal(cx: Scope) -> Element {
-    let number = use_state(&cx, || 0i64);
+    let number = use_state(cx, || 0i64);
 
-    use_future(&cx, (), |_| {
+    use_future(cx, (), |_| {
         to_owned![number];
         async move {
             loop {
@@ -22,5 +22,5 @@ pub fn ConnectionLocal(cx: Scope) -> Element {
         }
     });
 
-    rsx!(cx, "connection_local: {number}")
+    render!("connection_local: {number}")
 }
